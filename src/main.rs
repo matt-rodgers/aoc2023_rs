@@ -15,5 +15,6 @@ macro_rules! execute_day {
 fn main() -> Result<()> {
     execute_day!(day01);
     execute_day!(day02);
+    execute_day!(day03);
     Ok(())
 }

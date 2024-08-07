@@ -1,5 +1,3 @@
-use std::iter::Enumerate;
-
 use crate::util::answer::*;
 use crate::util::input;
 use anyhow::Result;
@@ -12,8 +10,6 @@ struct Rgb {
 }
 
 pub fn run() -> Result<Answer> {
-    let pt2 = 0;
-
     let lines = input::get_lines("inputs/02.in")?;
     
     let games: Vec<Rgb> = lines.iter().map(|line| {
