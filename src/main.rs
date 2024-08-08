@@ -8,7 +8,13 @@ macro_rules! execute_day {
         let answer = $day::run()?;
         let elapsed = start.elapsed();
 
-        println!("{}: pt1={}, pt2={}, elapsed={:?}", stringify!($day), answer.pt1, answer.pt2, elapsed);
+        println!(
+            "{}: pt1={}, pt2={}, elapsed={:?}",
+            stringify!($day),
+            answer.pt1,
+            answer.pt2,
+            elapsed
+        );
     };
 }
 

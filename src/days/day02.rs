@@ -11,27 +11,48 @@ struct Rgb {
 
 pub fn run() -> Result<Answer> {
     let lines = input::get_lines("inputs/02.in")?;
-    
-    let games: Vec<Rgb> = lines.iter().map(|line| {
-        // Discard first part of string
-        let ref text = line[line.find(":").expect("no colon in string")+2..];
-        let mut rgb = Rgb::default();
-        let sets: Vec<&str> = text.split("; ").collect();
-        for set in sets {
-            let colours: Vec<&str> = set.split(", ").collect();
-            for colour in colours {
-                let parts: Vec<&str> = colour.split(" ").collect();
-                let count: u32 = parts.first().expect("no first part").parse().expect("couldn't parse string to number");
-                match *parts.last().expect("no last part") {
-                    "red"   => { if count > rgb.r { rgb.r = count } },
-                    "green" => { if count > rgb.g { rgb.g = count } },
-                    "blue"  => { if count > rgb.b { rgb.b = count } },
-                    _       => { panic!("string is not red, green or blue") },
+
+    let games: Vec<Rgb> = lines
+        .iter()
+        .map(|line| {
+            // Discard first part of string
+            let ref text = line[line.find(":").expect("no colon in string") + 2..];
+            let mut rgb = Rgb::default();
+            let sets: Vec<&str> = text.split("; ").collect();
+            for set in sets {
+                let colours: Vec<&str> = set.split(", ").collect();
+                for colour in colours {
+                    let parts: Vec<&str> = colour.split(" ").collect();
+                    let count: u32 = parts
+                        .first()
+                        .expect("no first part")
+                        .parse()
+                        .expect("couldn't parse string to number");
+                    match *parts.last().expect("no last part") {
+                        "red" => {
+                            if count > rgb.r {
+                                rgb.r = count
+                            }
+                        }
+                        "green" => {
+                            if count > rgb.g {
+                                rgb.g = count
+                            }
+                        }
+                        "blue" => {
+                            if count > rgb.b {
+                                rgb.b = count
+                            }
+                        }
+                        _ => {
+                            panic!("string is not red, green or blue")
+                        }
+                    }
                 }
             }
-        }
-        rgb
-    }).collect();
+            rgb
+        })
+        .collect();
 
     let mut pt1 = 0;
     for (i, g) in games.iter().enumerate() {
@@ -40,9 +61,7 @@ pub fn run() -> Result<Answer> {
         }
     }
 
-    let pt2: u32 = games.iter().map(|g| {
-        g.r * g.g * g.b
-    }).sum();
+    let pt2: u32 = games.iter().map(|g| g.r * g.g * g.b).sum();
 
     Ok(Answer {
         pt1: pt1 as u64,

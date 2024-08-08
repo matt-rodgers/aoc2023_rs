@@ -1,8 +1,8 @@
 use crate::util::answer::*;
 use crate::util::input;
 use anyhow::Result;
+use regex::{Match, Regex};
 use std::collections::{HashMap, HashSet};
-use regex::{Regex, Match};
 
 pub fn run() -> Result<Answer> {
     let not_symbols: HashSet<char> = HashSet::from_iter("0123456789.".chars());
@@ -24,36 +24,45 @@ pub fn run() -> Result<Answer> {
     }
 
     let re = Regex::new(r"\d+")?;
-    let pt1: u32 = lines.iter().enumerate().map(|(i, line)| {
-        re.find_iter(line).map(|m| {
-            let num: u32 = m.as_str().parse().expect("couldn't parse string to integer");
-            let mut n: u32 = 0;
+    let pt1: u32 = lines
+        .iter()
+        .enumerate()
+        .map(|(i, line)| {
+            re.find_iter(line)
+                .map(|m| {
+                    let num: u32 = m
+                        .as_str()
+                        .parse()
+                        .expect("couldn't parse string to integer");
+                    let mut n: u32 = 0;
 
-            // Part 1: sum all numbers which have an adjacent symbol
-            for (x, y) in symbol_positions.iter() {
-                if is_adjacent(&m, i as i32, *x, *y) {
-                    n = num;
-                    break;
-                }
-            }
+                    // Part 1: sum all numbers which have an adjacent symbol
+                    for (x, y) in symbol_positions.iter() {
+                        if is_adjacent(&m, i as i32, *x, *y) {
+                            n = num;
+                            break;
+                        }
+                    }
 
-            // Part 2: collect all numbers adjacent to each gear
-            for ((x, y), ref mut v) in possible_gears.iter_mut() {
-                if is_adjacent(&m, i as i32, *x, *y) {
-                    v.push(num);
-                }
-            }
+                    // Part 2: collect all numbers adjacent to each gear
+                    for ((x, y), ref mut v) in possible_gears.iter_mut() {
+                        if is_adjacent(&m, i as i32, *x, *y) {
+                            v.push(num);
+                        }
+                    }
 
-            n
-        }).sum::<u32>()
-    }).sum();
+                    n
+                })
+                .sum::<u32>()
+        })
+        .sum();
 
     // Part 2: sum the 'gear ratio' for any possible gears that have exactly two adjacent numbers
-    let pt2: u32 = possible_gears.iter().filter(|(_, val)| {
-        val.len() == 2
-    }).map(|(_, val)| {
-        val[0] * val[1]
-    }).sum();
+    let pt2: u32 = possible_gears
+        .iter()
+        .filter(|(_, val)| val.len() == 2)
+        .map(|(_, val)| val[0] * val[1])
+        .sum();
 
     Ok(Answer {
         pt1: pt1 as u64,

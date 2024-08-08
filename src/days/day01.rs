@@ -50,7 +50,6 @@ pub fn run() -> Result<Answer> {
                             first = last;
                         }
                     }
-
                 }
             }
 
