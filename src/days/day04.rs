@@ -9,7 +9,8 @@ pub fn run() -> Result<Answer> {
     let mut card_count: HashMap<usize, u64> = (0..lines.len()).map(|i| (i, 1)).collect();
 
     let pt1: u64 = lines
-        .iter().enumerate()
+        .iter()
+        .enumerate()
         .map(|(i, line)| {
             let tmp: Vec<&str> = line.split([':', '|']).collect();
             let winning: HashSet<&str> = tmp[1].split(' ').filter(|num| !num.is_empty()).collect();
@@ -18,11 +19,18 @@ pub fn run() -> Result<Answer> {
             let win_count = ours.intersection(&winning).count();
 
             /* Part 2: count up the won cards */
-            for j in 0..win_count{
+            for j in 0..win_count {
                 let won_card = i + j + 1;
                 match card_count.get(&won_card) {
-                    Some(count) => { card_count.insert(won_card, count + card_count.get(&i).expect("index not in card_count")); },
-                    None        => { panic!("index not in card_count") },
+                    Some(count) => {
+                        card_count.insert(
+                            won_card,
+                            count + card_count.get(&i).expect("index not in card_count"),
+                        );
+                    }
+                    None => {
+                        panic!("index not in card_count")
+                    }
                 }
             }
 
