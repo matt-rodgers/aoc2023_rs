@@ -95,7 +95,12 @@ pub fn run() -> Result<Answer> {
                 let mut overlap_found = false;
 
                 /* and apply all map entries to it */
-                for Mapping { dest_start, source_start, length } in m {
+                for Mapping {
+                    dest_start,
+                    source_start,
+                    length,
+                } in m
+                {
                     let source_end = *source_start + *length;
                     let delta = dest_start - source_start;
 
@@ -136,11 +141,15 @@ pub fn run() -> Result<Answer> {
             ranges = results.clone();
             results.clear();
         }
-        
+
         final_locations.extend(ranges);
     }
 
-    let pt2 = final_locations.iter().map(|(l, _)| l).min().expect("could not find minimum");
+    let pt2 = final_locations
+        .iter()
+        .map(|(l, _)| l)
+        .min()
+        .expect("could not find minimum");
 
     Ok(Answer {
         pt1: pt1 as u64,
