@@ -52,8 +52,27 @@ pub fn run() -> Result<Answer> {
 }
 
 fn count_wins(time: u64, distance: u64) -> u64 {
-    (1..time - 1)
-        .map(|i| i * (time - i))
-        .filter(|d| *d > distance)
-        .count() as u64
+    /* d = i * (time - i)
+     * d = i * time - i^2
+     * i^2 - time.i + d = 0
+     *
+     * Use quadratic formula: ax^2 + bx + c ==> x = (-b +/-sqrt(b^2 - 4ac)) / 2a
+     * where a = 1, b = -time, c = distance
+     * we need an extra step where we find the closest integer to each root such that the distance is greater
+     */
+
+    let a: f64 = 1.0;
+    let b: f64 = -(time as f64);
+    let c: f64 = distance as f64;
+
+    let i1: f64 = (-b + (b.powi(2) - 4.0 * a * c).sqrt()) / (2.0 * a);
+    let i2: f64 = (-b - (b.powi(2) - 4.0 * a * c).sqrt()) / (2.0 * a);
+
+    let (larger, smaller) = if i1 > i2 { (i1, i2) } else { (i2, i1) };
+
+    let smaller_int: u64 = smaller.ceil() as u64;
+    let larger_int: u64 = larger.floor() as u64;
+
+    /* Inclusive range between the two values */
+    larger_int - smaller_int + 1
 }
