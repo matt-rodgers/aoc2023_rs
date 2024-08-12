@@ -3,10 +3,11 @@ use aoc2023::days::*;
 use std::time::Instant;
 
 macro_rules! execute_day {
-    ($day:ident) => {
+    ($day:ident, $file:literal, $timer:ident) => {
         let start = Instant::now();
-        let answer = $day::run()?;
+        let answer = $day::run(concat!("inputs/", $file))?;
         let elapsed = start.elapsed();
+        $timer += elapsed;
 
         println!(
             "{}: pt1={}, pt2={}, elapsed={:?}",
@@ -19,11 +20,15 @@ macro_rules! execute_day {
 }
 
 fn main() -> Result<()> {
-    execute_day!(day01);
-    execute_day!(day02);
-    execute_day!(day03);
-    execute_day!(day04);
-    execute_day!(day05);
-    execute_day!(day06);
+    let mut total_elapsed = std::time::Duration::from_micros(0);
+
+    execute_day!(day01, "01.in", total_elapsed);
+    execute_day!(day02, "02.in", total_elapsed);
+    execute_day!(day03, "03.in", total_elapsed);
+    execute_day!(day04, "04.in", total_elapsed);
+    execute_day!(day05, "05.in", total_elapsed);
+    execute_day!(day06, "06.in", total_elapsed);
+
+    println!("Total elapsed time: {:?}", total_elapsed);
     Ok(())
 }

@@ -2,8 +2,8 @@ use crate::util::answer::*;
 use crate::util::input;
 use anyhow::Result;
 
-pub fn run() -> Result<Answer> {
-    let lines = input::get_lines("inputs/06.in")?;
+pub fn run(input_path: &str) -> Result<Answer> {
+    let lines = input::get_lines(input_path)?;
 
     let times: Vec<u64> = lines[0]
         .split(' ')
@@ -41,7 +41,6 @@ pub fn run() -> Result<Answer> {
         .join("")
         .parse()
         .expect("couldn't parse string");
-    println!("Time: {}, Distance: {}", time, distance);
 
     let pt2 = count_wins(time, distance);
 
@@ -69,10 +68,32 @@ fn count_wins(time: u64, distance: u64) -> u64 {
     let i2: f64 = (-b - (b.powi(2) - 4.0 * a * c).sqrt()) / (2.0 * a);
 
     let (larger, smaller) = if i1 > i2 { (i1, i2) } else { (i2, i1) };
+    println!("larger={}, smaller={}", larger, smaller);
 
-    let smaller_int: u64 = smaller.ceil() as u64;
-    let larger_int: u64 = larger.floor() as u64;
+    let smaller_int: u64 = if smaller.ceil() == smaller {
+        smaller.ceil() as u64 + 1
+    } else {
+        smaller.ceil() as u64
+    };
+
+    let larger_int: u64 = if larger.ceil() == larger {
+        larger.floor() as u64 - 1
+    } else {
+        larger.floor() as u64
+    };
 
     /* Inclusive range between the two values */
     larger_int - smaller_int + 1
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_ex1() {
+        let answer = run("inputs/06.ex1").unwrap();
+        assert_eq!(answer.pt1, 288);
+        assert_eq!(answer.pt2, 71503);
+    }
 }

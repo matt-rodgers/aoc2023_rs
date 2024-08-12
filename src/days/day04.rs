@@ -4,8 +4,8 @@ use anyhow::Result;
 use std::collections::HashMap;
 use std::collections::HashSet;
 
-pub fn run() -> Result<Answer> {
-    let lines = input::get_lines("inputs/04.in")?;
+pub fn run(input_path: &str) -> Result<Answer> {
+    let lines = input::get_lines(input_path)?;
     let mut card_count: HashMap<usize, u64> = (0..lines.len()).map(|i| (i, 1)).collect();
 
     let pt1: u64 = lines
@@ -48,4 +48,16 @@ pub fn run() -> Result<Answer> {
         pt1: pt1,
         pt2: pt2 as u64,
     })
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_ex1() {
+        let answer = run("inputs/04.ex1").unwrap();
+        assert_eq!(answer.pt1, 13);
+        assert_eq!(answer.pt2, 30);
+    }
 }

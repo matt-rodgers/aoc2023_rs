@@ -9,8 +9,8 @@ struct Rgb {
     b: u32,
 }
 
-pub fn run() -> Result<Answer> {
-    let lines = input::get_lines("inputs/02.in")?;
+pub fn run(input_path: &str) -> Result<Answer> {
+    let lines = input::get_lines(input_path)?;
 
     let games: Vec<Rgb> = lines
         .iter()
@@ -67,4 +67,16 @@ pub fn run() -> Result<Answer> {
         pt1: pt1 as u64,
         pt2: pt2 as u64,
     })
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_ex1() {
+        let answer = run("inputs/02.ex1").unwrap();
+        assert_eq!(answer.pt1, 8);
+        assert_eq!(answer.pt2, 2286);
+    }
 }

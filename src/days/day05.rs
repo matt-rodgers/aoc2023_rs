@@ -9,8 +9,8 @@ struct Mapping {
     length: i64,
 }
 
-pub fn run() -> Result<Answer> {
-    let data = input::get_all("inputs/05.in")?;
+pub fn run(input_path: &str) -> Result<Answer> {
+    let data = input::get_all(input_path)?;
 
     /* Parse input */
     let parts: Vec<&str> = data.split("\n\n").collect();
@@ -155,4 +155,16 @@ pub fn run() -> Result<Answer> {
         pt1: pt1 as u64,
         pt2: *pt2 as u64,
     })
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_ex1() {
+        let answer = run("inputs/05.ex1").unwrap();
+        assert_eq!(answer.pt1, 35);
+        assert_eq!(answer.pt2, 46);
+    }
 }

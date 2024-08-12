@@ -4,10 +4,10 @@ use anyhow::Result;
 use regex::{Match, Regex};
 use std::collections::{HashMap, HashSet};
 
-pub fn run() -> Result<Answer> {
+pub fn run(input_path: &str) -> Result<Answer> {
     let not_symbols: HashSet<char> = HashSet::from_iter("0123456789.".chars());
 
-    let lines = input::get_lines("inputs/03.in")?;
+    let lines = input::get_lines(input_path)?;
 
     let mut symbol_positions: Vec<(i32, i32)> = Vec::new();
     let mut possible_gears: HashMap<(i32, i32), Vec<u32>> = HashMap::new();
@@ -77,4 +77,16 @@ fn is_adjacent(m: &Match, linenum: i32, x: i32, y: i32) -> bool {
         }
     }
     return false;
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_ex1() {
+        let answer = run("inputs/03.ex1").unwrap();
+        assert_eq!(answer.pt1, 4361);
+        assert_eq!(answer.pt2, 467835);
+    }
 }

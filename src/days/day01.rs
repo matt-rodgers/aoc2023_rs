@@ -3,8 +3,8 @@ use crate::util::input;
 use anyhow::Result;
 use std::collections::HashMap;
 
-pub fn run() -> Result<Answer> {
-    let lines = input::get_lines("inputs/01.in")?;
+pub fn run(input_path: &str) -> Result<Answer> {
+    let lines = input::get_lines(input_path)?;
 
     let pt1: u32 = lines
         .iter()
@@ -62,4 +62,21 @@ pub fn run() -> Result<Answer> {
         pt1: pt1 as u64,
         pt2: pt2 as u64,
     })
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_ex1() {
+        let answer = run("inputs/01.ex1").unwrap();
+        assert_eq!(answer.pt1, 142);
+    }
+
+    #[test]
+    fn test_ex2() {
+        let answer = run("inputs/01.ex2").unwrap();
+        assert_eq!(answer.pt2, 281);
+    }
 }
