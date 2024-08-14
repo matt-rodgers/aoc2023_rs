@@ -68,7 +68,6 @@ fn count_wins(time: u64, distance: u64) -> u64 {
     let i2: f64 = (-b - (b.powi(2) - 4.0 * a * c).sqrt()) / (2.0 * a);
 
     let (larger, smaller) = if i1 > i2 { (i1, i2) } else { (i2, i1) };
-    println!("larger={}, smaller={}", larger, smaller);
 
     let smaller_int: u64 = if smaller.ceil() == smaller {
         smaller.ceil() as u64 + 1
