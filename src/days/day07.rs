@@ -130,7 +130,7 @@ impl PartialOrd for Hand {
 
 fn card_rank(card: char) -> u32 {
     match card {
-        '_' => 10,
+        '_' => 0,
         '2' => 1,
         '3' => 2,
         '4' => 3,
@@ -179,6 +179,13 @@ mod tests {
         let answer = run("inputs/07.ex1").unwrap();
         assert_eq!(answer.pt1, 6440);
         assert_eq!(answer.pt2, 5905);
+    }
+
+    #[test]
+    fn test_ex2() {
+        let answer = run("inputs/07.ex2").unwrap();
+        assert_eq!(answer.pt1, 6592);
+        assert_eq!(answer.pt2, 6839);
     }
 
     #[test]
