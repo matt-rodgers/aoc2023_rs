@@ -1,8 +1,8 @@
 use crate::util::answer::*;
 use crate::util::input;
 use anyhow::Result;
-use std::collections::HashMap;
 use num::integer::lcm;
+use std::collections::HashMap;
 
 pub fn run(input_path: &str) -> Result<Answer> {
     let lines = input::get_lines(input_path)?;
@@ -55,23 +55,28 @@ pub fn run(input_path: &str) -> Result<Answer> {
         .map(|k| *k)
         .collect();
 
-    let loop_lengths: Vec<u64> = start_nodes.iter().map(|s| {
+    let loop_lengths: Vec<u64> = start_nodes
+        .iter()
+        .map(|s| {
             let mut j = 0;
             let mut cur = *s;
-            
+
             while !cur.ends_with('Z') {
                 let dir = directions[j % directions.len()];
-                
+
                 match nodes.get(cur) {
-                    Some(node) => { cur = node[dir] },
-                    None       => { panic!("Failed to get node {:?} from hashmap", cur) },
+                    Some(node) => cur = node[dir],
+                    None => {
+                        panic!("Failed to get node {:?} from hashmap", cur)
+                    }
                 }
-                
+
                 j += 1;
             }
-            
+
             j as u64
-    }).collect();
+        })
+        .collect();
 
     let mut pt2 = loop_lengths[0];
     for ll in loop_lengths.iter().skip(1) {
