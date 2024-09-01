@@ -31,6 +31,7 @@ fn main() -> Result<()> {
     execute_day!(day07, "07.in", total_elapsed);
     execute_day!(day08, "08.in", total_elapsed);
     execute_day!(day09, "09.in", total_elapsed);
+    execute_day!(day10, "10.in", total_elapsed);
 
     println!("Total elapsed time: {:?}", total_elapsed);
     Ok(())
