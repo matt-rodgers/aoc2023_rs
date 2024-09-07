@@ -18,9 +18,55 @@ impl Point {
     }
 }
 
-pub fn run(input_path: &str) -> Result<Answer> {
-    let pt2 = 0;
+fn expand(
+    galaxies: &Vec<Point>,
+    galaxy_rows: &HashSet<isize>,
+    galaxy_cols: &HashSet<isize>,
+    h: usize,
+    w: usize,
+    amount: isize,
+) -> Vec<Point> {
+    let mut row_mapping: HashMap<isize, isize> = HashMap::new();
+    let mut col_mapping: HashMap<isize, isize> = HashMap::new();
 
+    let mut extra: isize = 0;
+    for i in 0..h {
+        let n = i as isize;
+        if !galaxy_rows.contains(&n) {
+            extra += amount;
+        }
+
+        row_mapping.insert(n, n + extra);
+    }
+
+    extra = 0;
+    for i in 0..w {
+        let n = i as isize;
+        if !galaxy_cols.contains(&n) {
+            extra += amount;
+        }
+
+        col_mapping.insert(n, n + extra);
+    }
+
+    galaxies
+        .iter()
+        .map(|galaxy| Point {
+            x: *col_mapping.get(&galaxy.x).expect("col mapping not found"),
+            y: *row_mapping.get(&galaxy.y).expect("row mapping not found"),
+        })
+        .collect()
+}
+
+fn sum_distances(galaxies: &Vec<Point>) -> isize {
+    galaxies
+        .iter()
+        .combinations(2)
+        .map(|pair| pair[0].distance(pair[1]))
+        .sum()
+}
+
+pub fn run(input_path: &str) -> Result<Answer> {
     let lines = input::get_lines(input_path)?;
 
     let width = lines[0].len();
@@ -43,40 +89,11 @@ pub fn run(input_path: &str) -> Result<Answer> {
         }
     }
 
-    let mut row_mapping: HashMap<isize, isize> = HashMap::new();
-    let mut col_mapping: HashMap<isize, isize> = HashMap::new();
+    let galaxies_pt1 = expand(&galaxies, &galaxy_rows, &galaxy_cols, height, width, 1);
+    let galaxies_pt2 = expand(&galaxies, &galaxy_rows, &galaxy_cols, height, width, 999999);
 
-    let mut extra: isize = 0;
-    for i in 0..height {
-        let n = i as isize;
-        if !galaxy_rows.contains(&n) {
-            extra += 1;
-        }
-
-        row_mapping.insert(n, n + extra);
-    }
-
-    extra = 0;
-    for i in 0..width {
-        let n = i as isize;
-        if !galaxy_cols.contains(&n) {
-            extra += 1;
-        }
-
-        col_mapping.insert(n, n + extra);
-    }
-
-    /* Update galaxies with new co-ordinates */
-    for galaxy in galaxies.iter_mut() {
-        galaxy.x = *col_mapping.get(&galaxy.x).expect("col mapping not found");
-        galaxy.y = *row_mapping.get(&galaxy.y).expect("row mapping not found");
-    }
-
-    let pt1: isize = galaxies
-        .iter()
-        .combinations(2)
-        .map(|pair| pair[0].distance(pair[1]))
-        .sum();
+    let pt1 = sum_distances(&galaxies_pt1);
+    let pt2 = sum_distances(&galaxies_pt2);
 
     Ok(Answer {
         pt1: pt1 as u64,
