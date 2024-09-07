@@ -10,7 +10,7 @@ macro_rules! execute_day {
         $timer += elapsed;
 
         println!(
-            "{}: pt1={}, pt2={}, elapsed={:?}",
+            "{}: pt1 = {:20} , pt2 = {:20} , elapsed = {:?}",
             stringify!($day),
             answer.pt1,
             answer.pt2,
@@ -32,6 +32,7 @@ fn main() -> Result<()> {
     execute_day!(day08, "08.in", total_elapsed);
     execute_day!(day09, "09.in", total_elapsed);
     execute_day!(day10, "10.in", total_elapsed);
+    execute_day!(day11, "11.in", total_elapsed);
 
     println!("Total elapsed time: {:?}", total_elapsed);
     Ok(())

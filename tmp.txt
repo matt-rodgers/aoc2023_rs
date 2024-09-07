@@ -1,0 +1,76 @@
+
+running 22 tests
+test days::day01::tests::test_ex1 ... ok
+test days::day02::tests::test_ex1 ... ok
+test days::day05::tests::test_ex1 ... ok
+test days::day01::tests::test_ex2 ... ok
+test days::day06::tests::test_ex1 ... ok
+test days::day04::tests::test_ex1 ... ok
+test days::day07::tests::test_ex1 ... ok
+test days::day07::tests::test_hand_compare ... ok
+test days::day07::tests::test_hands_eq ... ok
+test days::day07::tests::test_hand_rank ... ok
+test days::day08::tests::test_ex2 ... ok
+test days::day08::tests::test_ex1 ... ok
+test days::day09::tests::test_ex1 ... ok
+test days::day08::tests::test_ex3 ... ok
+test days::day07::tests::test_ex2 ... ok
+test days::day10::tests::test_ex1 ... ok
+test days::day10::tests::test_ex2 ... ok
+test days::day10::tests::test_ex3 ... ok
+test days::day11::tests::test_ex1 ... FAILED
+test days::day10::tests::test_ex5 ... ok
+test days::day10::tests::test_ex4 ... ok
+test days::day03::tests::test_ex1 ... ok
+
+failures:
+
+---- days::day11::tests::test_ex1 stdout ----
+[(3, 0), (7, 1)]
+[(3, 0), (0, 2)]
+[(3, 0), (6, 4)]
+[(3, 0), (1, 5)]
+[(3, 0), (9, 6)]
+[(3, 0), (7, 8)]
+[(3, 0), (0, 9)]
+[(3, 0), (4, 9)]
+[(7, 1), (0, 2)]
+[(7, 1), (6, 4)]
+[(7, 1), (1, 5)]
+[(7, 1), (9, 6)]
+[(7, 1), (7, 8)]
+[(7, 1), (0, 9)]
+[(7, 1), (4, 9)]
+[(0, 2), (6, 4)]
+[(0, 2), (1, 5)]
+[(0, 2), (9, 6)]
+[(0, 2), (7, 8)]
+[(0, 2), (0, 9)]
+[(0, 2), (4, 9)]
+[(6, 4), (1, 5)]
+[(6, 4), (9, 6)]
+[(6, 4), (7, 8)]
+[(6, 4), (0, 9)]
+[(6, 4), (4, 9)]
+[(1, 5), (9, 6)]
+[(1, 5), (7, 8)]
+[(1, 5), (0, 9)]
+[(1, 5), (4, 9)]
+[(9, 6), (7, 8)]
+[(9, 6), (0, 9)]
+[(9, 6), (4, 9)]
+[(7, 8), (0, 9)]
+[(7, 8), (4, 9)]
+[(0, 9), (4, 9)]
+thread 'days::day11::tests::test_ex1' panicked at src/days/day11.rs:47:9:
+assertion `left == right` failed
+  left: 0
+ right: 374
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    days::day11::tests::test_ex1
+
+test result: FAILED. 21 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
